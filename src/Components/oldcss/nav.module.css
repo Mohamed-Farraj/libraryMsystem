@@ -5,7 +5,7 @@ nav{
     top: 0;
     width: 100%;
     padding: 20px;
-    background-color: #181A1B;
+    background-color: white;
 }
 nav .container{
     width:80%;
@@ -32,7 +32,7 @@ nav .container{
     width: 40%;
     justify-content: space-around;
     align-items: center;
-    color: #fff;
+    flex-grow: 5;
 
   }
   nav .logo span{
@@ -45,6 +45,5 @@ nav li,nav .cart{transition: all .5s;}
   nav .cart button{
    background-color: transparent;
    border: none; 
-   color: #fff;
   }
   

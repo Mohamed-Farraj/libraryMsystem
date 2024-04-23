@@ -55,9 +55,9 @@
     border:none;
     transition: all 0.5s;
   }
-.card  .soc button:hover {
+/* .card  .soc button:hover {
     color: teal;
-  }
+  } */
   
 
  /* .card .aboutchef :not(h2) {
@@ -65,7 +65,7 @@
   } */
  .card .aboutchef {
     padding: .5rem;
-    background-color: rgba(0, 128, 128, 0.63);
+    background-color: rgba(0, 59, 59, 0.63);
   }
   .card h2 {
     margin-block: 1rem;

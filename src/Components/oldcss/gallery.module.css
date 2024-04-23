@@ -1,6 +1,5 @@
 .gallery{
  padding: 40px 20px;
- background-color: #181A1B;
 }
 .gallery .container{
     display: flex;
@@ -46,7 +45,6 @@
     border-radius:3rem;
     border:none ;
     transition: all .5s;
-    display: none;
   }
 
   .gallery button:hover{background-color: teal;}
