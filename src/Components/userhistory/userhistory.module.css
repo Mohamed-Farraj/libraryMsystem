@@ -28,6 +28,7 @@
 .history .handlereturn
 {
     position: absolute;
+    padding: 40px;
     width: 50%;
     height: 50%;
     top: 25%;
