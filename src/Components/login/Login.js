@@ -19,7 +19,7 @@ function Login() {
     password: "",
   });
   let  navigate = useNavigate();
-  console.log("here si form", form);
+  // console.log("here si form", form);
 
   // const handleSubmit = (e) => {
   // e.preventDefault();
