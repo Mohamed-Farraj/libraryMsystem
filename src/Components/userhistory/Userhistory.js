@@ -65,7 +65,7 @@ const Userhistory = () => {
     <>
       <div className={`${h.history}`}>
         <h1 style={{ marginTop: "100px"}}>
-          books you've borrowed {uid.uname}
+          books you've borrowed {localStorage.getItem('name')}
         </h1>
         {console.log("x in jsx", x)}
         {x
@@ -75,10 +75,11 @@ const Userhistory = () => {
       <p>book id: {borrow.book.bookID}</p>
       <p>Title: {borrow.book.title}</p>
       <p>Author: {borrow.book.author}</p>
+      <p>Status: {borrow.status}</p>
       <p>User ID: {borrow.user.userID}</p>
       {/* Move the event handler to a function with the correct parameters */}
-      <button onClick={() => handleBorrow(borrow.book.bookID, borrow.user.userID)}>Return Book</button>
-
+      {/* <button onClick={() => handleBorrow(borrow.book.bookID, borrow.user.userID)}>Return Book</button> */}
+      {borrow.status === "returned"?<button disabled style={{backgroundColor:'gray'}}>Book is returned</button>  : <button onClick={() => handleBorrow(borrow.book.bookID, borrow.user.userID)}>Return Book</button>}
       <div className={`${h.handlereturn}`} style={{ display: display }}>
         <button onClick={() =>{setdisplay("none");setErrormsg(""); setError(false);setSuccess(false);} }>Exit</button>
 
@@ -86,9 +87,11 @@ const Userhistory = () => {
           return this book : {bid}
         </h3>
         <form onSubmit={(e) => { e.preventDefault(); returnHandler(); }}>
-          <button>Return It</button>
+          {borrow.status === "returned"? <button disabled style={{backgroundColor:'gray'}}>Return It</button> : <button>Return It</button>}
+          
         </form>
         {success === true && <h2 style={{ color: '#00ff00' }}>book returned  successfully!</h2>}
+        {/* {borrow.status === "returned" && <h2 style={{ color: 'teal' }}>book already returned!</h2>} */}
         {error === true && <h2 style={{ color: '#ff0000' }}>{errormsg}</h2>}
       </div>
 

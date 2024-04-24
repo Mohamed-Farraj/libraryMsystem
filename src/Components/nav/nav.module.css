@@ -29,10 +29,11 @@ nav .container{
   nav ul{
     list-style: none;
     display: flex;
-    width: 40%;
     justify-content: space-around;
     align-items: center;
     color: #fff;
+    flex-grow: 5;
+    
 
   }
   nav .logo span{
