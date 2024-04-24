@@ -46,7 +46,7 @@
     border-radius:3rem;
     border:none ;
     transition: all .5s;
-    display: none;
+    /* display: none; */
   }
 
   .gallery button:hover{background-color: teal;}

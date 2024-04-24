@@ -52,7 +52,7 @@ const Shelf = () => {
             obj={book}
             refresh={getAllBooks}
             usertype="user"
-            usid= {uid}
+            usid= {localStorage.getItem('id')}
           />
         ));
       }
@@ -64,7 +64,7 @@ const Shelf = () => {
             obj={book}
             refresh={getAllBooks}
             usertype="user"
-            usid={uid}
+            usid={localStorage.getItem('id')}
           />
         ));
 
@@ -117,7 +117,7 @@ const Shelf = () => {
             obj={book}
             refresh={getAllBooks}
             usertype="user"
-            usid={uid}
+            usid={localStorage.getItem('id')}
 
           />
         ));
@@ -130,7 +130,7 @@ const Shelf = () => {
             obj={book}
             refresh={getAllBooks}
             usertype="user"
-            usid={uid}
+            usid={localStorage.getItem('id')}
           />
         ));
       // return filteredBooks.toReversed().map((book) => (
@@ -151,7 +151,7 @@ const Shelf = () => {
               setSearch(e.target.value);
             }}
           />
-          <label htmlFor="select">Sort by: {id.uname}</label>
+          <label htmlFor="select">Sort by: {localStorage.getItem('id')}</label>
           <select
             id="select"
             value={selects}

@@ -9,7 +9,6 @@ const Desctop = () => {
   let uname = useParams();
   return (
     <div className="desc">
-      <Nav name={uname}/>
       <Hero />
       <Gallery />
     </div>

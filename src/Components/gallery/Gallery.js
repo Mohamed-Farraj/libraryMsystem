@@ -33,7 +33,7 @@ const [errormsg, setErrormsg] = useState("");
         console.log("here is x:", x);
     
           return x.toReversed().map((book) => {
-            return <Card key={book.bookID} obj={book} refresh={getAllBooks} usertype="user"/>;
+            return <Card key={book.bookID} obj={book} refresh={getAllBooks} usid={localStorage.getItem('id')} usertype="user"/>;
           });
         }
 
@@ -48,7 +48,7 @@ const [errormsg, setErrormsg] = useState("");
             <div className={`${styles.cards}`}>
                 {displayBooks()}
             </div>
-            <Link to={"/bookshelf"}><button>Show All Books</button></Link>
+            <Link to={"/bookshelf/"+localStorage.getItem('id')}><button>Show All Books</button></Link>
         </div>
       </div>
     </>

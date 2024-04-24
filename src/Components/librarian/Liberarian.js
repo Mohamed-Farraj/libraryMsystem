@@ -18,7 +18,7 @@ const Liberarian = () => {
     <>
       <div className={styles.home}>
         <div className={styles.greet}>
-          <h2>Welcome,{name.uname}</h2>
+          {/* <h2>Welcome,{name.uname}</h2> */}
         </div>
 
         <div className={styles.manage}>

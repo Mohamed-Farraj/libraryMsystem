@@ -18,7 +18,7 @@ img{
     row-gap: 2rem;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 128, 128, 0.432), rgba(0, 128, 128, 0.527)) ,url(../../media/landing.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.432), rgba(0, 84, 84, 0.527)) ,url(../../media/landing.jpg);
     background-size: cover;
     background-position: center center;
     align-content: center;

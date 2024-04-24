@@ -31,14 +31,16 @@ function Login() {
       .post(apiurl, values)
       .then((res) => {
         setName(res.data.userID);
+        localStorage.setItem('id', res.data.userID);
+        localStorage.setItem('name', res.data.username);
         console.log(res, name);
         setResult(res);
         setSuccess(true);
         setError(false);
         // setForm({ userName: "", password: "" });
-        <UserNameContext.Provider value={name}>
-          <Liberarian />
-        </UserNameContext.Provider>;
+        // <UserNameContext.Provider value={name}>
+        //   <Liberarian />
+        // </UserNameContext.Provider>;
       })
       .catch((err) => {
         console.error("Registration failed:", err.response.data);
