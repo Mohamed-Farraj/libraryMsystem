@@ -80,7 +80,6 @@ function Login() {
 
     // window.location.href = "/liberarian/" + name;
     // return<Liberarian />;
-    // setre(true)
   }
 
   return (
