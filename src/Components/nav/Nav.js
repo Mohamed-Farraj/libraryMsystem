@@ -5,6 +5,8 @@ import { faBookOpen } from '@fortawesome/free-solid-svg-icons';
 import { faWonSign } from '@fortawesome/free-solid-svg-icons';
 import { faUser} from '@fortawesome/free-solid-svg-icons';
 import { Link ,useParams} from "react-router-dom";
+import g from "../gallery/gallery.module.css";
+
 const Nav = (props) => {
   const [rerender, setRerender] = useState(false);
   useEffect(() => {
@@ -15,6 +17,12 @@ const Nav = (props) => {
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
+  const handlelogout =() =>
+  {
+    localStorage.setItem('name', "");
+    localStorage.setItem('id',null);
+    localStorage.setItem('log',false);
+  }
   return (
     <>
       <nav>
@@ -26,7 +34,7 @@ const Nav = (props) => {
            <Link to={"/home"}><li>Home</li></Link> 
            <Link to={"/bookshelf"}><li>Book Shelf</li></Link>
            <Link to={"/history"}><li>History</li></Link>
-          {localStorage.getItem('name') === "" && <Link to={"/login"}><li>Login</li></Link>}  
+           {localStorage.getItem('name') === "" ? <Link to={"/login"}><li>Login</li></Link>:<button className={`${g.button}`} onClick={handlelogout}><li><Link to={"/login"}>log out</Link></li></button>}  
            <li><FontAwesomeIcon icon={faUser} /> {localStorage.getItem('name')}</li> 
           </ul>
           <div className={`${styles.cart}`}>
