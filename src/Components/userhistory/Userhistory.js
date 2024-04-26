@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const Userhistory = () => {
-  let uid = useParams();
+  let uid = parseInt(localStorage.getItem('id'));
   const [x, setX] = useState([]);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -69,7 +69,7 @@ const Userhistory = () => {
         </h1>
         {console.log("x in jsx", x)}
         {x
-  .filter((borrow) => borrow.user.userID === parseInt(uid.uname))
+  .filter((borrow) => borrow.user.userID === parseInt(localStorage.getItem('id')))
   .map((borrow, index) => (
     <div key={index} className={`${h.return}`}>
       <p>book id: {borrow.book.bookID}</p>

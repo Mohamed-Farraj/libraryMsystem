@@ -69,12 +69,12 @@ function Login() {
   // };
 
   if (error === false && result.data.userType === "normal") {
-    navigate(`/home/${name}`)
+    navigate(`/home`)
     // window.location.href = "/home/" + name;
     // <Link to={"/home/" + name}></Link>
   } else if (error === false && result.data.userType === "admin") {
     console.log("here is form", form);
-    navigate(`/liberarian/${name}`)
+    navigate(`/liberarian`)
 
     // <Link to={`/liberarian/ + ${name}`}></Link>
 

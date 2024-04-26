@@ -12,7 +12,7 @@ const Shelf = () => {
   const [hide, setHide] = useState("hide");
   const [success, setSuccess] = useState(false);
   const [errormsg, setErrormsg] = useState("");
-  let id =useParams();
+  let id ;
 
   const getAllBooks = () => {
     const apiurl = "http://localhost:8080/getAllBooks";
@@ -35,7 +35,7 @@ const Shelf = () => {
 
   const displayBooks = (q) => {
     console.log("here is x:", x);
-    const uid = id.uname;
+    const uid = parseInt(localStorage.getItem('id'));
     console.log("uid", uid);
 
     if (q.trim() === "") {
