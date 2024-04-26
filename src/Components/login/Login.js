@@ -50,7 +50,6 @@ function Login() {
         setSuccess(false);
       });
   }
-
   let initial = {
     userName: "",
     password: "",
@@ -80,7 +79,6 @@ function Login() {
 
     // window.location.href = "/liberarian/" + name;
     // return<Liberarian />;
-    // setre(true)
   }
 
   return (
