@@ -83,7 +83,7 @@ const UsersManage = () => {
     <>
   <div className={styles.homeb}>
     {/* <button className="act add"  onClick={handleAddBook}>Want to Add New book?</button> */}
-
+<div className={styles.searchbar}>
     <input
       className={styles.searchBooks} // Use the CSS module class name
       type="text"
@@ -92,7 +92,7 @@ const UsersManage = () => {
         setSearch(e.target.value);
       }}
     />
-
+</div>
     {displayUsers(search)}
 
     {/* <div className={"adminform "+hide}>

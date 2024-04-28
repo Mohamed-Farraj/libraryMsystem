@@ -39,6 +39,7 @@ const handleDeleteBook = (e) => {
     setUpdateBookActive(false);
     setDeleteBookActive(true);
     setHideD("");
+    props.refresh();
 };
 
 
@@ -97,7 +98,7 @@ const handleSubmit = (e) => {
             Yes, delete it!
           </button>
         </div>
-        {success && <div className={styles.formtitle} style={{ color: '#008080' }}><h3>Book deleted Successfully</h3></div>}
+        {success && <div className={styles.formtitle} style={{ color: '#008080' }}><h3>User deleted Successfully</h3></div>}
         {error && <div className={styles.formtitle} style={{ color: '#F00' }}><h3>{errormsg}</h3></div>}
       </form>
     </div>
@@ -107,7 +108,7 @@ const handleSubmit = (e) => {
         {/* <button><FontAwesomeIcon icon={faPenToSquare} onClick={handleUpdateBook}/></button> */}
         <button style={{ color: '#F00' }}><FontAwesomeIcon icon={faTrash} onClick={handleDeleteBook} /></button>
       </div>
-      <div className={stylescard.aboutchef} style={{ padding: '1rem', wordWrap: 'break-word' }}>
+      <div className={stylescard.chefimg} style={{ padding: '1rem', wordWrap: 'break-word',backgroundColor:'#002B2BF0'}}>
         <h3 className="philosopher">{props.obj.username}</h3><br/>
         <p>
           <span>email : {props.obj.email}</span><br/><br/>
