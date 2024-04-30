@@ -5,6 +5,7 @@ import Liberarian from "../librarian/Liberarian";
 import log from "./login.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import ErrMsgSignUp from "../gallery/ErrMsg-signup/ErrMsgSignup";
 export const UserNameContext = createContext();
 
 function Login() {
@@ -18,6 +19,8 @@ function Login() {
     userName: "",
     password: "",
   });
+  const [server, setServer] = useState("none");
+
   let  navigate = useNavigate();
   // console.log("here si form", form);
 
@@ -44,10 +47,19 @@ function Login() {
         // </UserNameContext.Provider>;
       })
       .catch((err) => {
-        console.error("Registration failed:", err.response.data);
+
+        try {
+          console.error("Registration failed:", err.response.data);
         setErrormsg(err.response.data);
         setError(true);
         setSuccess(false);
+        } catch (error) {
+          console.log("Error")
+          setServer("block");
+
+        }
+
+        
       });
   }
   let initial = {
@@ -109,12 +121,13 @@ function Login() {
             required
             onChange={logformik.handleChange}
             onBlur={logformik.handleBlur}
-
           />
           <button className={`${log["form-btn"]}`} type="submit">
             Log in
           </button>
-
+          <div style={{ display: `${server}` }}>
+            <ErrMsgSignUp/>
+          </div>
           {error === true && <h6 className={`${log.err}`}>{errormsg}</h6>}
           {/* {name} */}
         </form>

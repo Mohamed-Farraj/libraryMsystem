@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     row-gap: 20px;
+    min-height: 70vh;
 }
 .history button{
     background-color: teal;

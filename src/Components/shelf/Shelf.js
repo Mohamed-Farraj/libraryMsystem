@@ -3,6 +3,8 @@ import style from "./shelf.module.css";
 import axios from "axios";
 import Card from "../card/Card";
 import { useParams } from "react-router-dom";
+import ErrMsg from "../ErrorMsg/ErrorMsg";
+
 const Shelf = () => {
   const [search, setSearch] = useState("");
   const [x, setX] = useState([]);
@@ -12,6 +14,7 @@ const Shelf = () => {
   const [hide, setHide] = useState("hide");
   const [success, setSuccess] = useState(false);
   const [errormsg, setErrormsg] = useState("");
+  const [server, setServer] = useState("none");
   let id ;
 
   const getAllBooks = () => {
@@ -23,11 +26,20 @@ const Shelf = () => {
         setX(res.data);
         setError(false);
       })
+
       .catch((err) => {
-        console.error("Add failed:", err.response.data);
+
+        try {
+            console.error("Add failed:", err.response.data);
         setErrormsg(err.response.data);
         setError(true);
         setSuccess(false);
+        } catch (error) {
+           console.log("erorr in server");
+           window.alert("Error in server");
+           setServer("block");
+        }
+      
       });
   };
 
@@ -164,7 +176,13 @@ const Shelf = () => {
           </select>
         </div>
         <div className={`${style.books}`}>
-          <h1 className={style.hh}>{displayBooks(search).length}{} Books Avalible</h1>
+          <h1 className={style.hh}>
+            {displayBooks(search).length}
+            {} Books Avalible
+          </h1>
+          <div style={{ display: `${server}` }}>
+            <ErrMsg />
+          </div>
           {displayBooks(search)}
         </div>
       </div>
