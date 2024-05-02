@@ -3,6 +3,7 @@ import defimg from "../../media/books-cover/default.jpg"; //i want to add this
 import styles from "./booksmanage.module.css";
 import axios from "axios";
 import UserCard from "../card/UserCard";
+import ErrMsg from "../ErrorMsg/ErrorMsg";
 
 const UsersManage = () => {
   const [deleteBookActive, setDeleteBookActive] = useState(false);
@@ -11,6 +12,8 @@ const UsersManage = () => {
   const [errormsg, setErrormsg] = useState("");
   const [search, setSearch] = useState("");
   const [x, setX] = useState([]);
+  const [server, setServer] = useState("none");
+
 
   const getAllUsers = () => {
     const apiurl = "http://localhost:8080/getAllUsers";
@@ -22,10 +25,17 @@ const UsersManage = () => {
         setError(false);
       })
       .catch((err) => {
-        console.error("Add failed:", err.response.data);
+        try {
+           console.error("Add failed:", err.response.data);
         setErrormsg(err.response.data);
         setError(true);
         setSuccess(false);
+        } catch (error) {
+          console.log("Error");
+          setServer("block");
+
+        }
+       
       });
   };
 
@@ -81,21 +91,24 @@ const UsersManage = () => {
 
   return (
     <>
-  <div className={styles.homeb}>
-    {/* <button className="act add"  onClick={handleAddBook}>Want to Add New book?</button> */}
-<div className={styles.searchbar}>
-    <input
-      className={styles.searchBooks} // Use the CSS module class name
-      type="text"
-      placeholder="Search by User Name"
-      onChange={(e) => {
-        setSearch(e.target.value);
-      }}
-    />
-</div>
-    {displayUsers(search)}
+      <div className={styles.homeb}>
+        {/* <button className="act add"  onClick={handleAddBook}>Want to Add New book?</button> */}
+        <div style={{ display: `${server}` }}>
+          <ErrMsg />
+        </div>
+        <div className={styles.searchbar}>
+          <input
+            className={styles.searchBooks} // Use the CSS module class name
+            type="text"
+            placeholder="Search by User Name"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
+        {displayUsers(search)}
 
-    {/* <div className={"adminform "+hide}>
+        {/* <div className={"adminform "+hide}>
     <button className="icon" onClick={()=>{setHide("hide");setSuccess(false)}}><FontAwesomeIcon icon={faCircleXmark} /></button>
     <div className='formtitle'><h3>add new book</h3></div>
         <form className={'managebooks '} action=""  onSubmit={handleSubmit}>
@@ -114,8 +127,8 @@ const UsersManage = () => {
             </div>
         </form>
     </div> */}
-  </div>
-</>
+      </div>
+    </>
   );
 };
 

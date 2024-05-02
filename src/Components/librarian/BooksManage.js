@@ -6,6 +6,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import ErrMsg from "../ErrorMsg/ErrorMsg";
 
 const BooksManage = () => {
   const [name, setName] = useState("");
@@ -27,6 +28,8 @@ const BooksManage = () => {
     imageLink: defimg,
   });
   const [x, setX] = useState([]);
+const [server, setServer] = useState("none");
+
 
   const getAllBooks = () => {
     const apiurl = "http://localhost:8080/getAllBooks";
@@ -38,10 +41,18 @@ const BooksManage = () => {
         setError(false);
       })
       .catch((err) => {
-        console.error("Add failed:", err.response.data);
+
+        try {
+          console.error("Add failed:", err.response.data);
         setErrormsg(err.response.data);
         setError(true);
         setSuccess(false);
+        } catch (error) {
+          console.log("Error")
+          setServer("block");
+        }
+
+        
       });
   };
 
@@ -148,108 +159,118 @@ return uniqueFilteredBooks.reverse().map((book) => (
 
   return (
     <>
-  <div className={styles.homeb}>
-    <button className={`${styles.act} ${styles.add}`} onClick={handleAddBook}>
-      Want to Add New book?
-    </button>
-    <div className={styles.searchbar}>
-    <input
-      className={styles.searchBooks}
-      type="text"
-      placeholder="Search by Book Title , Author Name ,ISBN ,rack Number"
-      onChange={(e) => {
-        setSearch(e.target.value);
-      }}
-    />
-</div>
-    {displayBooks(search)}
-
-    <div className={`${styles.adminform} ${styles[hide]}`}>
-      <button
-        className={styles.icon}
-        onClick={() => {
-          setHide("hide");
-          setSuccess(false);
-        }}
-      >
-        <FontAwesomeIcon icon={faCircleXmark} />
-      </button>
-      <div className={styles.formtitle}>
-        <h3>add new book</h3>
-      </div>
-      <form className={`${styles.managebooks}`} action="" onSubmit={handleSubmit}>
-        <input
-          className={styles.half}
-          name="title"
-          type="text"
-          placeholder="Book title"
-          onChange={handleChange}
-        />
-        <input
-          className={styles.half}
-          name="author"
-          type="text"
-          placeholder="Book Author"
-          onChange={handleChange}
-        />
-        <input
-          className={styles.full}
-          name="isbn"
-          type="text"
-          placeholder="ISBN"
-          onChange={handleChange}
-        />
-        <input
-          className={styles.half}
-          name="rackNumber"
-          type="number"
-          placeholder="Rack number"
-          min={0}
-          onChange={handleChange}
-        />
-        <input
-          className={styles.half}
-          name="availableCopies"
-          type="number"
-          placeholder="Avalible copies"
-          min={0}
-          onChange={handleChange}
-        />
-        <input
-          className={styles.full}
-          name="totalCopies"
-          type="number"
-          placeholder="total copies"
-          min={0}
-          onChange={handleChange}
-        />
-        <input
-          className={styles.full}
-          name="imageLink"
-          type="text"
-          placeholder="book cover source link"
-          onChange={handleChange}
-        />
-        <div className={styles.buttons}>
-          <button className={styles.sub} type="submit">
-            Submit
-          </button>
-          {success && (
-            <div className={styles.formtitle} style={{ color: "#008081" }}>
-              <h3>Book Added Successfully</h3>
-            </div>
-          )}
-          {error && (
-            <div className={styles.formtitle} style={{ color: "#F00" }}>
-              <h3>{errormsg}</h3>
-            </div>
-          )}
+      <div className={styles.homeb}>
+        <button
+          className={`${styles.act} ${styles.add}`}
+          onClick={handleAddBook}
+        >
+          Want to Add New book?
+        </button>
+        <div style={{ display: `${server}` }}>
+          <ErrMsg />
         </div>
-      </form>
-    </div>
-  </div>
-</>
+        <div className={styles.searchbar}>
+          <input
+            className={styles.searchBooks}
+            type="text"
+            placeholder="Search by Book Title , Author Name ,ISBN ,rack Number"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
 
+        {displayBooks(search)}
+
+        <div className={`${styles.adminform} ${styles[hide]}`}>
+          <button
+            className={styles.icon}
+            onClick={() => {
+              setHide("hide");
+              setSuccess(false);
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleXmark} />
+          </button>
+          <div className={styles.formtitle}>
+            <h3>add new book</h3>
+          </div>
+          <form
+            className={`${styles.managebooks}`}
+            action=""
+            onSubmit={handleSubmit}
+          >
+            <input
+              className={styles.half}
+              name="title"
+              type="text"
+              placeholder="Book title"
+              onChange={handleChange}
+            />
+            <input
+              className={styles.half}
+              name="author"
+              type="text"
+              placeholder="Book Author"
+              onChange={handleChange}
+            />
+            <input
+              className={styles.full}
+              name="isbn"
+              type="text"
+              placeholder="ISBN"
+              onChange={handleChange}
+            />
+            <input
+              className={styles.half}
+              name="rackNumber"
+              type="number"
+              placeholder="Rack number"
+              min={0}
+              onChange={handleChange}
+            />
+            <input
+              className={styles.half}
+              name="availableCopies"
+              type="number"
+              placeholder="Avalible copies"
+              min={0}
+              onChange={handleChange}
+            />
+            <input
+              className={styles.full}
+              name="totalCopies"
+              type="number"
+              placeholder="total copies"
+              min={0}
+              onChange={handleChange}
+            />
+            <input
+              className={styles.full}
+              name="imageLink"
+              type="text"
+              placeholder="book cover source link"
+              onChange={handleChange}
+            />
+            <div className={styles.buttons}>
+              <button className={styles.sub} type="submit">
+                Submit
+              </button>
+              {success && (
+                <div className={styles.formtitle} style={{ color: "#008081" }}>
+                  <h3>Book Added Successfully</h3>
+                </div>
+              )}
+              {error && (
+                <div className={styles.formtitle} style={{ color: "#F00" }}>
+                  <h3>{errormsg}</h3>
+                </div>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 
