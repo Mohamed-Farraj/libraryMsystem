@@ -3,9 +3,11 @@ import h from "./userhistory.module.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ErrMsg from "../ErrorMsg/ErrorMsg";
+import ErrMsgSignUp from "../gallery/ErrMsg-signup/ErrMsgSignup";
+
 
 const Userhistory = () => {
-  let uid = parseInt(localStorage.getItem('id'));
+  let uid = parseInt(localStorage.getItem("id"));
   const [x, setX] = useState([]);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -14,7 +16,7 @@ const Userhistory = () => {
   const [useid, setuid] = useState(0);
   const [bid, setbid] = useState(0);
   const [server, setServer] = useState("none");
-
+  const [errCatch, setcatch] = useState(false);
 
   const getBorrowedBooks = () => {
     const apiurl = "http://localhost:8080/getBorrowedBooks";
@@ -27,35 +29,30 @@ const Userhistory = () => {
         setError(false);
       })
       .catch((err) => {
-
         try {
           console.error("Add failed:", err.response.data);
-        setErrormsg(err.response.data);
-        setError(true);
-        setSuccess(false);
+          setErrormsg(err.response.data);
+          setError(true);
+          setSuccess(false);
         } catch (error) {
           console.log("erorr in server");
           window.alert("Error in server");
           setServer("block");
         }
-
-
-        
       });
   };
 
   useEffect(getBorrowedBooks, []);
 
-  function handleBorrow(bid,uid) {
-      setdisplay("flex");
-      setbid(bid);
-      setuid(uid);
-   
+  function handleBorrow(bid, uid) {
+    setdisplay("flex");
+    setbid(bid);
+    setuid(uid);
   }
 
   const returnHandler = () => {
     const apiurl = `http://localhost:8080/returnBorrowedBook/${useid}/${bid}`;
-  
+
     axios
       .put(apiurl)
       .then((res) => {
@@ -65,14 +62,21 @@ const Userhistory = () => {
         // Handle success, e.g., show a success message or update UI
       })
       .catch((err) => {
-        console.error("Failed to return book:", err.response.data);
-        setError(true);
-        setErrormsg(err.response.data);
+        try {
+          console.error("Failed to return book:", err.response.data);
+          setError(true);
+          setErrormsg(err.response.data);
+          setcatch(false);
+
+        } catch (error) {
+          console.log("erorr in server");
+          setcatch(true);
+
+        }
 
         // Handle error, e.g., show an error message or handle the error condition
       });
   };
-  
 
   return (
     <>
@@ -82,7 +86,7 @@ const Userhistory = () => {
         </h1>
 
         <div style={{ display: `${server}` }}>
-          <ErrMsg/>
+          <ErrMsg />
         </div>
 
         {console.log("x in jsx", x)}
@@ -148,6 +152,11 @@ const Userhistory = () => {
                 {/* {borrow.status === "returned" && <h2 style={{ color: 'teal' }}>book already returned!</h2>} */}
                 {error === true && (
                   <h2 style={{ color: "#ff0000" }}>{errormsg}</h2>
+                )}
+                {errCatch === true && (
+                  <div>
+                    <ErrMsgSignUp />
+                  </div>
                 )}
               </div>
             </div>

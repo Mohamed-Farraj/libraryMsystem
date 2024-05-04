@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import ErrMsgSignUp from "../gallery/ErrMsg-signup/ErrMsgSignup";
+
 
 const Card = (props) => {
   const [name, setName] = useState("");
@@ -19,6 +21,8 @@ const Card = (props) => {
   const [success, setSuccess] = useState(false);
   const [errormsg, setErrormsg] = useState("");
   const [form, setForm] = useState(props.obj);
+  const [errCatch, setcatch] = useState(false);
+
 
   const handleUpdateBook = (e) => {
     // e.preventDefault();
@@ -59,12 +63,24 @@ const Card = (props) => {
           setSuccess(true);
           setError(false);
           props.refresh();
+          setcatch(false);
+
         })
         .catch((err) => {
-          console.error("Updating failed:", err.response);
+
+
+          try {
+             console.error("Updating failed:", err.response);
           setErrormsg(err.response);
           setError(true);
           setSuccess(false);
+          setcatch(false);
+
+          } catch (error) {
+             console.log("erorr in server");
+             setcatch(true);
+          }
+         
         });
     } else if (deleteBookActive) {
       const apiurl = "http://localhost:8080/deleteBook/" + props.obj.bookID;
@@ -76,12 +92,24 @@ const Card = (props) => {
           setSuccess(true);
           setError(false);
           props.refresh();
+          setcatch(false);
+
         })
         .catch((err) => {
-          console.error("Delete failed:", err.response.data);
+
+
+          try {
+                      console.error("Delete failed:", err.response.data);
           setErrormsg(err.response.data);
           setError(true);
           setSuccess(false);
+          setcatch(false);
+
+          } catch (error) {
+            console.log("erorr in server");
+            setcatch(true);
+          }
+
         });
     } else if (borrowBookActive) {
       const apiurl = `http://localhost:8080/borrow-book?userId=${props.usid}&bookId=${props.obj.bookID}`;
@@ -97,13 +125,23 @@ const Card = (props) => {
           // setName(res.status);
           setSuccess(true);
           setError(false);
+          setcatch(false);
+
           // props.refresh();
         })
         .catch((err) => {
+
+          try {
           console.error("faild borrow book:", err);
           setErrormsg(err.response.data);
           setError(true);
           setSuccess(false);
+
+          } catch (error) {
+            console.log("erorr in server");
+            setcatch(true);
+          }
+          
         });
     }
   };
@@ -209,6 +247,11 @@ const Card = (props) => {
               <h3>{errormsg}</h3>
             </div>
           )}
+          {errCatch === true && (
+            <div>
+              <ErrMsgSignUp />
+            </div>
+          )}
         </form>
       </div>
 
@@ -252,6 +295,11 @@ const Card = (props) => {
               <h3>{errormsg}</h3>
             </div>
           )}
+          {errCatch === true && (
+            <div className={styles.formtitle} style={{ color: "#F00" }}>
+              <ErrMsgSignUp />
+            </div>
+          )}
         </form>
       </div>
 
@@ -268,10 +316,12 @@ const Card = (props) => {
           <FontAwesomeIcon icon={faCircleXmark} />
         </button>
         <div className={styles.formtitle}>
-          {localStorage.getItem('id') === "null" ? (
+          {localStorage.getItem("id") === "null" ? (
             <h3 style={{ color: "red" }}>Please Login First!</h3>
           ) : (
-            <h3 style={{color:"black"}}>Sure for this Borrow Book Request?</h3>
+            <h3 style={{ color: "black" }}>
+              Sure for this Borrow Book Request?
+            </h3>
           )}
         </div>
         <form
@@ -280,7 +330,7 @@ const Card = (props) => {
           onSubmit={handleSubmit}
         >
           <div className={styles.buttons}>
-            {localStorage.getItem('id') !== "null" && (
+            {localStorage.getItem("id") !== "null" && (
               <button
                 className={styles.sub}
                 type="submit"
@@ -297,7 +347,13 @@ const Card = (props) => {
           )}
           {error && (
             <div className={styles.formtitle} style={{ color: "#F00" }}>
+              {/* {errormsg === "object" && setErrormsg("errorr")} */}
               <h3>{errormsg}</h3>
+            </div>
+          )}
+          {errCatch === true && (
+            <div>
+              <ErrMsgSignUp />
             </div>
           )}
         </form>
@@ -326,27 +382,37 @@ const Card = (props) => {
         </div>
         <div className={stylescard.aboutchef}>
           <h1 className="philosopher">{props.obj.title}</h1>
-          <span><b>Author</b>: {props.obj.author}</span>
+          <span>
+            <b>Author</b>: {props.obj.author}
+          </span>
           <br />
           <br />
           <p>
-            <span><b>isbn</b>: {props.obj.isbn}</span>
+            <span>
+              <b>isbn</b>: {props.obj.isbn}
+            </span>
             <br />
             {props.usertype === "admin" && (
               <>
-                <span><b>rackNumber</b>: {props.obj.rackNumber}</span>
+                <span>
+                  <b>rackNumber</b>: {props.obj.rackNumber}
+                </span>
                 <br />
               </>
             )}
             {props.usertype === "admin" && (
               <>
-                <span><b>avalibleCopies</b>: {props.obj.availableCopies}</span>
+                <span>
+                  <b>avalibleCopies</b>: {props.obj.availableCopies}
+                </span>
                 <br />
               </>
             )}
             {props.usertype === "admin" && (
               <>
-                <span><b>totalCopies</b>: {props.obj.totalCopies}</span>
+                <span>
+                  <b>totalCopies</b>: {props.obj.totalCopies}
+                </span>
                 <br />
               </>
             )}
