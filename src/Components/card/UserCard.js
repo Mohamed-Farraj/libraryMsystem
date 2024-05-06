@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import ErrMsgSignUp from "../gallery/ErrMsg-signup/ErrMsgSignup";
+
 
 
 
@@ -20,6 +22,8 @@ const UserCard = (props) => {
   const [success, setSuccess] = useState(false);
   const [errormsg, setErrormsg] = useState("");
   const [form, setForm] = useState(props.obj);
+    const [errCatch, setcatch] = useState(false);
+
 
   
 
@@ -73,10 +77,20 @@ const handleSubmit = (e) => {
           props.refresh();
         })
         .catch(err => {
-          console.error('Delete failed:', err.response.data);
+
+          try {
+             console.error('Delete failed:', err.response.data);
           setErrormsg(err.response.data);
           setError(true);
           setSuccess(false);
+          setcatch(false);
+
+
+          } catch (error) {
+              console.log("erorr in server");
+              setcatch(true);
+          }
+         
         });
 }
 
@@ -100,6 +114,11 @@ const handleSubmit = (e) => {
         </div>
         {success && <div className={styles.formtitle} style={{ color: '#008080' }}><h3>User deleted Successfully</h3></div>}
         {error && <div className={styles.formtitle} style={{ color: '#F00' }}><h3>{errormsg}</h3></div>}
+          {errCatch === true && (
+              <div>
+                <ErrMsgSignUp />
+              </div>
+            )}
       </form>
     </div>
 

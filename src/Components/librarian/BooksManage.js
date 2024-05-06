@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ErrMsg from "../ErrorMsg/ErrorMsg";
+import ErrMsgSignUp from "../gallery/ErrMsg-signup/ErrMsgSignup";
+
 
 const BooksManage = () => {
   const [name, setName] = useState("");
@@ -29,6 +31,8 @@ const BooksManage = () => {
   });
   const [x, setX] = useState([]);
 const [server, setServer] = useState("none");
+  const [errCatch, setcatch] = useState(false);
+
 
 
   const getAllBooks = () => {
@@ -72,10 +76,18 @@ const [server, setServer] = useState("none");
         getAllBooks();
       })
       .catch((err) => {
-        console.error("Add failed:", err.response.data);
+        try {
+           console.error("Add failed:", err.response.data);
         setErrormsg(err.response.data);
         setError(true);
         setSuccess(false);
+        setcatch(false);
+
+        } catch (error) {
+            console.log("erorr in server");
+            setcatch(true);
+        }
+       
       });
   };
 
@@ -264,6 +276,11 @@ return uniqueFilteredBooks.reverse().map((book) => (
               {error && (
                 <div className={styles.formtitle} style={{ color: "#F00" }}>
                   <h3>{errormsg}</h3>
+                </div>
+              )}
+              {errCatch === true && (
+                <div>
+                  <ErrMsgSignUp />
                 </div>
               )}
             </div>
