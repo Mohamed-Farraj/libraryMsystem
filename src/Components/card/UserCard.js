@@ -114,6 +114,11 @@ const handleSubmit = (e) => {
         </div>
         {success && <div className={styles.formtitle} style={{ color: '#008080' }}><h3>User deleted Successfully</h3></div>}
         {error && <div className={styles.formtitle} style={{ color: '#F00' }}><h3>{errormsg}</h3></div>}
+          {errCatch === true && (
+              <div>
+                <ErrMsgSignUp />
+              </div>
+            )}
       </form>
     </div>
 
